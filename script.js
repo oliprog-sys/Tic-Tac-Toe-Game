@@ -1,85 +1,13 @@
-// const readline = require('readline');
 
-// const rl = readline.createInterface({
-//     input: process.stdin,
-//     output: process.stdout
-// });
+const players = {
+    player1: "X",
+    player2: "O"    
+}
 
-
-// function displayBoard(){
-//     console.clear();
-//     console.log("1: TOP LEFT");
-//     console.log("2: TOP MIDDLE");
-//     console.log("3: TOP RIGHT");
-//     console.log("4: MIDDLE LEFT");
-//     console.log("5: CENTER");
-//     console.log("6: MIDDLE RIGHT");
-//     console.log("7: BOTTOM LEFT");
-//     console.log("8: BOTTOM MIDDLE");
-//     console.log("9: BOTTOM RIGHT");
-//     console.log('');
-
-//     console.log(' ' +array[0][0] +' | ' + array[0][1] + ' | ' + array[0][2]);
-//     console.log('---|---|---');
-//     console.log(' ' + array[1][0] + ' | ' + array[1][1] + ' | ' + array[1][2]);
-//     console.log('---|---|---');
-//     console.log(' ' + array[2][0] + ' | ' + array[2][1] + ' | ' + array[2][2]);
-//     console.log('');    
-// }
-
-// let player = 'X';
-
-// function checkWin() {    
-//     for (let i = 0; i < 3; i++) {
-//         if (array[i][0] === player && array[i][1] === player &&array[i][2] === player) return true; 
-//         if (array[0][i] === player && array[1][i] === player && array[2][i] === player) return true; 
-//     }
-//     if (array[0][0] === player && array[1][1] === player && array[2][2] === player) return true; 
-//     if (array[0][2] === player && array[1][1] === player && array[2][0] === player) return true; 
-//     return false;
-// }
-
-// function updateBoard() {
-//     rl.question("Enter the position (1-9): ", (userInput) => {
-//         let row, col;
-
-//         switch (userInput) {
-//             case '1': row = 0; col = 0; break;
-//             case '2': row = 0; col = 1; break;
-//             case '3': row = 0; col = 2; break;
-//             case '4': row = 1; col = 0; break;
-//             case '5': row = 1; col = 1; break;
-//             case '6': row = 1; col = 2; break;
-//             case '7': row = 2; col = 0; break;
-//             case '8': row = 2; col = 1; break;
-//             case '9': row = 2; col = 2; break;
-//             default:
-//                 console.log("Invalid input. Please enter a number between 1 and 9.");
-//                 return updateBoard();
-//         }
-
-//         if (array[row][col] !== ' ') {
-//             console.log("Position already taken");
-//             return updateBoard();
-//         }
-
-//         array[row][col] = player;
-//         displayBoard(); 
-
-//         if (checkWin()) {
-//             console.log(`Player ${player} wins!`);
-//             rl.close(); 
-//             return;
-//         }
-  
-//         player = (player === 'X') ? 'O' : 'X';
-
-//         updateBoard(); 
-//     });
-// }
-
-// displayBoard();
-// updateBoard();
+const Score = {
+    score1: 0,
+    score2: 0
+}
 
 const array = [
     [' ', ' ', ' '],
@@ -87,9 +15,10 @@ const array = [
     [' ', ' ', ' ']
 ];
 
+
 const boardCells = document.getElementsByClassName('board-cell');
 
-let player = 'X';
+let currentPlayer = players.player1;
 
 function checkCell(row, column) {
     return array[row][column] === ' ';
@@ -101,19 +30,44 @@ function checkTie(row, column){
 
 function checkWin(){
     for(let i = 0; i < 3; i++){
-        if (array[i][0] === player && array[i][1] === player &&array[i][2] === player) 
+        if (array[i][0] === currentPlayer && array[i][1] === currentPlayer &&array[i][2] === currentPlayer) 
             return true; 
-        if (array[0][i] === player && array[1][i] === player && array[2][i] === player) 
+        if (array[0][i] === currentPlayer && array[1][i] === currentPlayer && array[2][i] === currentPlayer) 
             return true; 
     }
 
-    if (array[0][0] === player && array[1][1] === player && array[2][2] === player) 
+    if (array[0][0] === currentPlayer && array[1][1] === currentPlayer && array[2][2] === currentPlayer) 
         return true; 
-    if (array[0][2] === player && array[1][1] === player && array[2][0] === player) 
+    if (array[0][2] === currentPlayer && array[1][1] === currentPlayer && array[2][0] === currentPlayer) 
         return true; 
     
     return false;    
 }
+
+function getWinnerName(obj, value){
+    let result;
+    Object.keys(obj).forEach(key => {
+        if(obj[key] == value){
+            result = key;
+        }
+    })
+    return result;
+}
+
+const player1Score = document.getElementById('player-1');
+const player2Score = document.getElementById('player-2');
+
+function updateScore(result){    
+    if(result === "player1"){
+        Score.score1++;
+    } else if(result === "player2"){
+        Score.score2++;
+    }
+
+    player1Score.textContent = Score.score1;
+    player2Score.textContent = Score.score2;
+}
+
 
 function updateBoard() {
     for (let i = 0; i < boardCells.length; i++) {
@@ -149,11 +103,14 @@ function updateBoard() {
                 return; 
             }
 
-            array[row][column] = player;
-            event.target.textContent = player; 
+            array[row][column] = currentPlayer;
+            event.target.textContent = currentPlayer; 
 
             if(checkWin()){
-                alert(`Player ${player} have won`);
+                let result = getWinnerName(players, currentPlayer);
+                alert(`${result} has won`);
+                updateScore(result);
+                resetBoard();
                 return;
             }
 
@@ -163,11 +120,62 @@ function updateBoard() {
             }
 
             
-
-
-            player = (player === 'X') ? 'O' : 'X';
+            currentPlayer = (currentPlayer === players.player1) ? players.player2 : players.player1;
         });
     }       
 }
 
+
+function resetBoard(){
+    for(let i = 0; i < array.length; i++){
+        for(let j = 0; j < array[i].length; j++){
+            array[i][j] = ' ';
+        }
+    }
+
+    for(let i = 0; i < boardCells.length; i++){
+        boardCells[i].textContent = ' ';
+    }
+
+    currentPlayer = players.player1;
+}
+
+function resetScore(){
+    Score.score1 = 0;
+    Score.score2 = 0;
+    player1Score.textContent = 0;
+    player2Score.textContent = 0;
+}
+
+function resetTheGame(){
+     resetBoard();
+     resetScore();
+}
+
+const player1Name = document.getElementById('userName1');
+const player2Name = document.getElementById('userName2');
+
+function changePlayerName(){
+    let player1Input = document.getElementById('player1Name').value;
+    let player2Input = document.getElementById('player2Name').value;
+
+    if(player1Input !== ''){
+        player1Name.textContent = player1Input + "'s";
+    } 
+
+    if(player2Input !== ''){
+        player2Name.textContent = player2Input + "'s";
+    }
+
+    document.getElementById('player1Name').value = '';
+    document.getElementById('player2Name').value = '';
+}
+
+const resetBtn = document.getElementById('reset-btn');
+const changeBtn = document.getElementById('changeName');
+changeBtn.addEventListener('click', changePlayerName);
+
+resetBtn.addEventListener('click', resetTheGame);
+
 updateBoard();
+

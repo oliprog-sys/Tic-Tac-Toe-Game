@@ -8,19 +8,31 @@
 </head>
 <body>
     <div class="main-div">
-        <h1>Tic Tac Toe</h1>
-        <div class="board" id="board">
-            <button id="board-cell-1" class="board-cell"></button>
-            <button id="board-cell-2" class="board-cell"></button>
-            <button id="board-cell-3" class="board-cell"></button>
-            <button id="board-cell-4" class="board-cell"></button>
-            <button id="board-cell-5" class="board-cell"></button>
-            <button id="board-cell-6" class="board-cell"></button>
-            <button id="board-cell-7" class="board-cell"></button>
-            <button id="board-cell-8" class="board-cell"></button>
-            <button id="board-cell-9" class="board-cell"></button>
+        <div class="board-wrapper">
+            <div id="change-name-form">
+                <label class="player1-name">Player1: <input type="text" id="player1Name" class="player1Name" placeholder="Player1"></label>
+                <label class="player2-name">Player2: <input type="text" id="player2Name" class="player2Name" placeholder="Player2"></label>
+                <button class="changeName" id="changeName">Change Name</button>
+            </div>
+            <h1>Tic Tac Toe</h1>
+            <div class="board" id="board">
+                <button id="board-cell-1" class="board-cell"></button>
+                <button id="board-cell-2" class="board-cell"></button>
+                <button id="board-cell-3" class="board-cell"></button>
+                <button id="board-cell-4" class="board-cell"></button>
+                <button id="board-cell-5" class="board-cell"></button>
+                <button id="board-cell-6" class="board-cell"></button>
+                <button id="board-cell-7" class="board-cell"></button>
+                <button id="board-cell-8" class="board-cell"></button>
+                <button id="board-cell-9" class="board-cell"></button>
+            </div>            
         </div>
-    </div>
+        <div class="btns">
+            <label for=""><span id="userName1">Player1's</span> Score: <span id="player-1">0</span></label>
+            <label for=""><span id="userName2">Player2's</span> Score: <span id="player-2">0</span></label>
+            <button id="reset-btn" class="reset-btn">Reset</button>       
+        </div>
+    </div>    
     <script src="script.js"></script>
 </body>
 </html>

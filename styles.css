@@ -5,16 +5,22 @@ body {
 }
 
 .main-div {
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    background-color: rgb(68, 68, 64); 
+}
+
+.board-wrapper   {
     width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgb(63, 63, 42);
 }
 
-.main-div h1 {
+.board-wrapper h1 {
     font-family: monospace;
     font-size: 3rem;
     color: rgb(212, 194, 194);
@@ -24,7 +30,7 @@ body {
     width: 50%;
     height: 50%;
     display: grid;
-    background-color: blue;
+    /* background-color: blue; */
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     gap: 3px;
@@ -32,7 +38,7 @@ body {
 
 .board-cell {
     font-size: 2rem;
-    background-color: black;
+    background-color: rgb(76, 175, 175);
     color: white;
     cursor: pointer;
     border: none;
@@ -42,4 +48,75 @@ body {
 .board-cell:hover {
     box-shadow: 4px 3px 10px yellow;
     transition: 0.9s ease;
+}
+
+.btns {   
+    width: 100%; 
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    /* padding: 50px; */
+}
+
+
+.btns label {
+    font-size: 23px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+    margin: 10px;
+}
+
+.reset-btn {
+    padding: 7px 40px;
+    width: 160px;
+    margin: 12px;
+    border: none;
+    background-color: red;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 5px;;
+    cursor: pointer;
+}
+
+.reset-btn:hover {
+    opacity: 0.8;
+    box-shadow: 0px 4px 8px white;
+    margin-bottom: 10px;
+}
+
+#change-name-form {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.player1-name,
+.player2-name {
+    color: white;
+    font-size: 23px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-right: 12px;
+}
+
+.player1Name,
+.player2Name {
+    height: 24px;
+    width: 250px;
+    padding: 4px;
+    font-size: 15px;
+    border: none;
+    border-radius: 4px;
+}
+
+.changeName {
+    padding: 7px 15px;
+    border: none;
+    font-size: 15px;
+    border-radius: 5px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
